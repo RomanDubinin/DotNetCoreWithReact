@@ -10,7 +10,7 @@ using Npgsql;
 
 namespace DBRepository
 {
-    public class IdeomRepository
+    public class IdeomRepository : IIdeomRepository
     {
         private string connectionString { get; }
 

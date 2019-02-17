@@ -11,11 +11,11 @@ namespace HelloWorld.Controllers
     [Route("api/[controller]")]
     public class IdeomController : DbContext
     {
-        private readonly IdeomRepository ideomRepository;
+        private readonly IIdeomRepository ideomRepository;
 
-        public IdeomController()
+        public IdeomController(IIdeomRepository ideomRepository)
         {
-            ideomRepository = new IdeomRepository(MyOptions.PostgresConnectionString);
+            this.ideomRepository = ideomRepository;
         }
 
         [HttpGet("[action]")]

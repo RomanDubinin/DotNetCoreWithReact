@@ -21,8 +21,9 @@ namespace HelloWorld
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //todo сделать по-нормальному
-            MyOptions.PostgresConnectionString = Configuration.GetConnectionString("PostgresConnectionString");
+            services.AddScoped<IIdeomRepository>(
+                provider => new IdeomRepository(Configuration.GetConnectionString("PostgresConnectionString")));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the React files will be served from this directory
