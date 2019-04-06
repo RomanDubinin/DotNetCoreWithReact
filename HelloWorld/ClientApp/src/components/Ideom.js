@@ -7,7 +7,7 @@ export class Ideom extends Component {
         super(props);
         this.state = { ideoms: [], loading: true };
 
-        fetch('api/Ideom/Ideoms')
+        fetch('api/Ideom/SelectIdeoms')
             .then(response => response.json())
             .then(data => {
                 this.setState({ ideoms: data, loading: false });
@@ -26,13 +26,22 @@ export class Ideom extends Component {
                 <tbody>
                 {ideoms.map(ideom =>
                     <tr key={ideom.id}>
-                        <td>{ideom.russianText}</td>
                         <td>{ideom.englishText}</td>
+                        <td>{ideom.russianText}</td>
                     </tr>
                 )}
                 </tbody>
             </table>
         );
+    }
+
+    addIdeomHandler(event){
+        console.log(event.target)
+        const data = new FormData(event.target);
+        fetch('api/Ideom/SaveIdeom', {
+            method: 'POST',
+            body: data
+        })
     }
 
     render () {
@@ -43,6 +52,11 @@ export class Ideom extends Component {
         return (
             <div>
                 <h1>Ideoms</h1>
+                <form onSubmit={this.addIdeomHandler}>
+                    <input id="englishText" name="englishText" type="text" />
+                    <input id="russianText" name="russianText" type="text" />
+                    <button>Add</button>
+                </form>
                 {contents}
             </div>
         );

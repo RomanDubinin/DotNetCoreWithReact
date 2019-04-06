@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using DBRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,17 @@ namespace HelloWorld.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IEnumerable<Ideom>> Ideoms()
+        public async Task<IEnumerable<Ideom>> SelectIdeoms()
         {
             var ideoms = await ideomRepository.SelectAsync().ConfigureAwait(false);
             return ideoms;
+        }
+        
+        [HttpPost("[action]")]
+        public async Task SaveIdeom(Ideom ideom)
+        {
+            ideom.Id = Guid.NewGuid();
+            await ideomRepository.SaveAsync(ideom, CancellationToken.None).ConfigureAwait(false);
         }
     }
 }
